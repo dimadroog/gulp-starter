@@ -22,4 +22,4 @@
 - gulp-webp-html
 - gulp-webpcss
 
-Special thanks for [Evgeny Andrikanich](https://www.youtube.com/c/FreelancerLifeStyle)
+With thanks to [Evgeny Andrikanich](https://www.youtube.com/c/FreelancerLifeStyle)

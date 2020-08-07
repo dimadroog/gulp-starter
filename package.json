@@ -25,5 +25,7 @@
     "gulp-webp-html": "^1.0.2",
     "gulp-webpcss": "^1.1.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "webp-converter": "2.2.3"
+  }
 }

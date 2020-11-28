@@ -1,9 +1,5 @@
-@@include('jq-start.js')
-
-@@include('webpsupport.js')
-
-// @@include('../bem/default/script.js')
+/* @@include('_jq-start.js') */
 
 console.log('index');
 
-@@include('jq-end.js')
+/* @@include('_jq-end.js') */

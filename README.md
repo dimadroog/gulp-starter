@@ -5,7 +5,7 @@
 - type ```$ npm install ``` for install plugins
 - type ```$ gulp ``` for run
 
-##standalone functions:
+## standalone functions:
 - type ```$ gulp min``` for create min.css and min.js files
 
 

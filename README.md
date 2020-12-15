@@ -11,6 +11,7 @@
 
 ## List of gulp plugins:
 
+- gulp-babel
 - browser-sync
 - gulp-sass
 - gulp-autoprefixer

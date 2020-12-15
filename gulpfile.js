@@ -38,7 +38,8 @@ let { src, dest } = require('gulp'),
     uglify = require('gulp-uglify-es').default,
     rename = require('gulp-rename'),
     fileinclude = require('gulp-file-include'),
-    del = require('del');
+    del = require('del'),
+    babel = require('gulp-babel');
 
 
 
@@ -85,6 +86,9 @@ function css(){
 function js(){
     return src(patch.src.js)
         .pipe(fileinclude())
+        .pipe(babel({
+            presets: ['@babel/env']
+        }))
         .pipe(dest(patch.build.js))
         .pipe(browsersync.stream())
 }

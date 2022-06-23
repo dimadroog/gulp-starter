@@ -1,22 +1,19 @@
 <!DOCTYPE HTML>
 <html lang="ru">
     <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-        <title>Test</title>
-        <link rel="stylesheet" href="css/style.css">
+        @@include('_head.html', {
+            "title": "Индексная страница"
+        })
     </head>
     <body>
 
-        <!-- @@include('_header.html') -->
+        @@include('_header.html')
 
-        hello world
+        <main class="main">
+            hello world!
+        </main>
 
-        <!-- @@include('_footer.html') -->
-
-        <!-- <script src="lib/jquery/jquery-3.2.1.min.js"></script> -->
-        <script src="js/script.js"></script>
+        @@include('_footer.html')
 
     </body>
 </html>

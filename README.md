@@ -21,5 +21,3 @@
 - gulp-uglify-es
 - gulp-rename
 - del
-
-With thanks to [Evgeny Andrikanich](https://www.youtube.com/c/FreelancerLifeStyle)

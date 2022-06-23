@@ -14,7 +14,7 @@ let patch = {
         html: [source_folder + '/*.html', '!' + source_folder + '/_*.html'],
         css: [source_folder + '/scss/*.scss', '!' + source_folder + '/scss/_*.scss'],
         js: [source_folder + '/js/*.js', '!' + source_folder + '/js/_*.js'],
-        img: source_folder + '/img/**/*.{jpg,png,svg,gif,ico,webp}',
+        img: source_folder + '/img/**/*.{jpg,png,svg,gif,ico,webp,mp4,webm}',
         fonts: source_folder + '/fonts/**/*',
         lib: [source_folder + '/lib/**', '!' + source_folder + '/lib/{_*,_*/**}'],
     },
@@ -22,9 +22,9 @@ let patch = {
         html: source_folder + '/**/*.html',
         css: source_folder + '/scss/**/*.scss',
         js: source_folder + '/js/**/*.js',
-        img: source_folder + '/img/**/*.{jpg,png,svg,gif,ico,webp}',
+        img: source_folder + '/img/**/*.{jpg,png,svg,gif,ico,webp,mp4,webm}',
     },
-    clean: './' + project_folder + '/'
+    clean: ['./' + project_folder + '/**/*', '!./' + project_folder + '/favicon.ico']
 }
 
 let { src, dest } = require('gulp');
@@ -34,11 +34,11 @@ let fileinclude = require('gulp-file-include');
 let del = require('del');
 let sass = require('gulp-sass')(require('sass'));
 let autoprefixer = require('gulp-autoprefixer');
-let group_media = require('gulp-group-css-media-queries');
+// let group_media = require('gulp-group-css-media-queries');
 let clean_css = require('gulp-clean-css');
 let uglify = require('gulp-uglify-es').default;
 let rename = require('gulp-rename');
-let babel = require('gulp-babel');
+// let babel = require('gulp-babel');
 
 
 function browserSync(params){
@@ -61,7 +61,7 @@ function html(){
 function css(){
     return src(patch.src.css)
         .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
-        .pipe(group_media())
+        // .pipe(group_media())
         .pipe(
             autoprefixer({
                 overrideBrowserslist: ['last 5 versions'],
@@ -76,9 +76,9 @@ function css(){
 function js(){
     return src(patch.src.js)
         .pipe(fileinclude())
-        .pipe(babel({
-            presets: ['@babel/env']
-        }))
+        // .pipe(babel({
+        //     presets: ['@babel/env']
+        // }))
         .pipe(dest(patch.build.js))
         .pipe(browsersync.stream())
 }
@@ -150,7 +150,7 @@ gulp.task('min', async function() {
                 outputStyle: 'expanded'
             })
         )
-        .pipe(group_media())
+        // .pipe(group_media())
         .pipe(
             autoprefixer({
                 overrideBrowserslist: ['last 5 versions'],

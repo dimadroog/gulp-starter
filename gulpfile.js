@@ -14,7 +14,7 @@ let patch = {
         html: [source_folder + '/*.html', '!' + source_folder + '/_*.html'],
         css: [source_folder + '/scss/*.scss', '!' + source_folder + '/scss/_*.scss'],
         js: [source_folder + '/js/*.js', '!' + source_folder + '/js/_*.js'],
-        img: source_folder + '/img/**/*.{jpg,png,svg,gif,ico,webp,mp4,webm}',
+        img: source_folder + '/img/**/*.{jpg,png,svg,gif,ico,webp,mp4,webm,webmanifest}',
         fonts: source_folder + '/fonts/**/*',
         lib: [source_folder + '/lib/**', '!' + source_folder + '/lib/{_*,_*/**}'],
     },
@@ -22,7 +22,7 @@ let patch = {
         html: source_folder + '/**/*.html',
         css: source_folder + '/scss/**/*.scss',
         js: source_folder + '/js/**/*.js',
-        img: source_folder + '/img/**/*.{jpg,png,svg,gif,ico,webp,mp4,webm}',
+        img: source_folder + '/img/**/*.{jpg,png,svg,gif,ico,webp,mp4,webm,webmanifest}',
     },
     clean: ['./' + project_folder + '/**/*', '!./' + project_folder + '/favicon.ico']
 }

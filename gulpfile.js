@@ -15,8 +15,9 @@ let patch = {
         css: [source_folder + '/scss/*.scss', '!' + source_folder + '/scss/_*.scss'],
         js: [source_folder + '/js/*.js', '!' + source_folder + '/js/_*.js'],
         img: source_folder + '/img/**/*.{jpg,png,svg,gif,ico,webp,mp4,webm,webmanifest}',
-        fonts: source_folder + '/fonts/**/*',
         lib: [source_folder + '/lib/**', '!' + source_folder + '/lib/{_*,_*/**}'],
+        fonts: source_folder + '/fonts/**/*',
+        favicon: source_folder + '/favicon.ico',
     },
     watch: {
         html: source_folder + '/**/*.html',
@@ -24,7 +25,7 @@ let patch = {
         js: source_folder + '/js/**/*.js',
         img: source_folder + '/img/**/*.{jpg,png,svg,gif,ico,webp,mp4,webm,webmanifest}',
     },
-    clean: ['./' + project_folder + '/**/*', '!./' + project_folder + '/favicon.ico']
+    clean: './' + project_folder + '/**/*'
 }
 
 let { src, dest } = require('gulp');
@@ -34,10 +35,9 @@ let fileinclude = require('gulp-file-include');
 let del = require('del');
 let sass = require('gulp-sass')(require('sass'));
 let autoprefixer = require('gulp-autoprefixer');
-// let group_media = require('gulp-group-css-media-queries');
 let clean_css = require('gulp-clean-css');
-let uglify = require('gulp-uglify-es').default;
 let rename = require('gulp-rename');
+let prettyHtml = require('gulp-pretty-html');
 // let babel = require('gulp-babel');
 
 
@@ -54,6 +54,7 @@ function browserSync(params){
 function html(){
     return src(patch.src.html)
         .pipe(fileinclude())
+        .pipe(prettyHtml())
         .pipe(dest(patch.build.html))
         .pipe(browsersync.stream())
 }
@@ -61,12 +62,19 @@ function html(){
 function css(){
     return src(patch.src.css)
         .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
-        // .pipe(group_media())
         .pipe(
             autoprefixer({
                 overrideBrowserslist: ['last 5 versions'],
                 cascade: true,
                 grid: true
+            })
+        )
+        .pipe(dest(patch.build.css))
+        // .pipe(browsersync.stream())
+        .pipe(clean_css())
+        .pipe(
+            rename({
+                extname: '.min.css',
             })
         )
         .pipe(dest(patch.build.css))
@@ -84,9 +92,7 @@ function js(){
 }
 
 function images(){
-    return src(patch.src.img)
-        .pipe(dest(patch.build.img))
-        .pipe(src(patch.src.img))
+    return src(patch.src.img, {encoding: false})
         .pipe(dest(patch.build.img))
         .pipe(browsersync.stream())
 }
@@ -94,6 +100,11 @@ function images(){
 function fonts(){
     return src(patch.src.fonts)
         .pipe(dest(patch.build.fonts))
+}
+
+function favicon(){
+    return src(patch.src.favicon, {encoding: false})
+        .pipe(dest(patch.build.html))
 }
 
 function lib(){
@@ -113,11 +124,11 @@ function clean(){
 }
 
 
-let build = gulp.series(clean, gulp.parallel(images, js, css, html, fonts, lib));
+let build = gulp.series(clean, gulp.parallel(images, js, css, html, fonts, favicon, lib));
 let watch = gulp.parallel(build, watchFiles, browserSync);
 
 
-exports.fonts = fonts;
+
 exports.images = images;
 exports.js = js;
 exports.css = css;
@@ -125,47 +136,3 @@ exports.html = html;
 exports.build = build;
 exports.watch = watch;
 exports.default = watch;
-
-
-
-
-/*only single use functions*/
-
-// minify js and css files
-gulp.task('min', async function() {
-    let min_js = src(patch.src.js)
-        .pipe(fileinclude())
-        .pipe(dest(patch.build.js))
-        .pipe(uglify())
-        .pipe(
-            rename({
-                extname: '.min.js',
-            })
-        )
-        .pipe(dest(patch.build.js));
-
-    let min_css = src(patch.src.css)
-        .pipe(
-            sass({
-                outputStyle: 'expanded'
-            })
-        )
-        // .pipe(group_media())
-        .pipe(
-            autoprefixer({
-                overrideBrowserslist: ['last 5 versions'],
-                cascade: true,
-                grid: true
-            })
-        )
-        .pipe(dest(patch.build.css))
-        .pipe(clean_css())
-        .pipe(
-            rename({
-                extname: '.min.css',
-            })
-        )
-        .pipe(dest(patch.build.css));
-
-    return [min_css, min_js];
-});

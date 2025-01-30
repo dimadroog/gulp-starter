@@ -98,7 +98,7 @@ function images(){
 }
 
 function fonts(){
-    return src(patch.src.fonts)
+    return src(patch.src.fonts, {encoding: false})
         .pipe(dest(patch.build.fonts))
 }
 

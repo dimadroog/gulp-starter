@@ -11,11 +11,24 @@ let patch = {
         lib: project_folder + '/lib/',
     },
     src: {
-        html: [source_folder + '/*.html', '!' + source_folder + '/_*.html'],
-        css: [source_folder + '/scss/*.scss', '!' + source_folder + '/scss/_*.scss'],
-        js: [source_folder + '/js/*.js', '!' + source_folder + '/js/_*.js'],
+        html: [
+            source_folder + '/*.html', 
+            '!' + source_folder + '/_*.html'
+        ],
+        css: [
+            source_folder + '/scss/*.scss', 
+            '!' + source_folder + '/scss/_*.scss'
+        ],
+        js: [
+            source_folder + '/js/*.js', 
+            '!' + source_folder + '/js/_*.js'
+        ],
+        lib: [
+            source_folder + '/lib/**', 
+            '!' + source_folder + '/lib/{_*,_*/**}', 
+            '!' + source_folder + '/lib/**/**/node_modules/**'
+        ],
         img: source_folder + '/img/**/*.{jpg,png,svg,gif,ico,webp,mp4,webm,webmanifest}',
-        lib: [source_folder + '/lib/**', '!' + source_folder + '/lib/{_*,_*/**}'],
         fonts: source_folder + '/fonts/**/*',
         favicon: source_folder + '/favicon.ico',
     },

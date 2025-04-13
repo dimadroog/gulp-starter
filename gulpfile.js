@@ -12,8 +12,8 @@ let patch = {
     },
     src: {
         html: [
-            source_folder + '/*.html', 
-            '!' + source_folder + '/_*.html'
+            source_folder + '/**/*.njk', 
+            '!' + source_folder + '/**/_*.njk'
         ],
         css: [
             source_folder + '/scss/*.scss', 
@@ -27,13 +27,20 @@ let patch = {
             source_folder + '/lib/**', 
             '!' + source_folder + '/lib/{_*,_*/**}', 
             '!' + source_folder + '/lib/**/**/node_modules/**'
+            // '!' + source_folder + '/lib/bootstrap-*/.github/**',
+            // '!' + source_folder + '/lib/bootstrap-*/build/**',
+            // '!' + source_folder + '/lib/bootstrap-*/js/**',
+            // '!' + source_folder + '/lib/bootstrap-*/scss/**',
+            // '!' + source_folder + '/lib/bootstrap-*/site/**',
+            // '!' + source_folder + '/lib/bootstrap-*/nuget/**',
+            // '!' + source_folder + '/lib/bootstrap-*/*.*',
         ],
         img: source_folder + '/img/**/*.{jpg,png,svg,gif,ico,webp,mp4,webm,webmanifest}',
         fonts: source_folder + '/fonts/**/*',
         favicon: source_folder + '/favicon.ico',
     },
     watch: {
-        html: source_folder + '/**/*.html',
+        html: source_folder + '/**/*.njk',
         css: source_folder + '/scss/**/*.scss',
         js: source_folder + '/js/**/*.js',
         img: source_folder + '/img/**/*.{jpg,png,svg,gif,ico,webp,mp4,webm,webmanifest}',
@@ -44,13 +51,13 @@ let patch = {
 let { src, dest } = require('gulp');
 let gulp = require('gulp');
 let browsersync = require('browser-sync').create();
-let fileinclude = require('gulp-file-include');
 let del = require('del');
 let sass = require('gulp-sass')(require('sass'));
 let autoprefixer = require('gulp-autoprefixer');
 let clean_css = require('gulp-clean-css');
 let rename = require('gulp-rename');
 let prettyHtml = require('gulp-pretty-html');
+let nunjucksRender = require('gulp-nunjucks-render');
 // let babel = require('gulp-babel');
 
 
@@ -66,9 +73,12 @@ function browserSync(params){
 
 function html(){
     return src(patch.src.html)
-        .pipe(fileinclude())
+        .pipe(nunjucksRender({
+            path: source_folder,
+        }))
         .pipe(prettyHtml())
         .pipe(dest(patch.build.html))
+        .pipe(browsersync.stream())
         .pipe(browsersync.stream())
 }
 
@@ -96,7 +106,6 @@ function css(){
 
 function js(){
     return src(patch.src.js)
-        .pipe(fileinclude())
         // .pipe(babel({
         //     presets: ['@babel/env']
         // }))

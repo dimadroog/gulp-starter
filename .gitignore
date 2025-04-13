@@ -1,7 +1,10 @@
 /package-lock.json
 /node_modules/
 /.git/
-/app/lib/bootstrap-*/node_modules/
-/app/lib/bootstrap-*/site/
-/dist/lib/bootstrap-*/node_modules/
-/dist/lib/bootstrap-*/site/
+# /app/lib/bootstrap-*/node_modules/
+# /app/lib/bootstrap-*/.github/
+# /app/lib/bootstrap-*/build/
+# /app/lib/bootstrap-*/js/
+# /app/lib/bootstrap-*/scss/
+# /app/lib/bootstrap-*/nuget/
+# /app/lib/bootstrap-*/*.*
